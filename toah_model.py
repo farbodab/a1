@@ -1,5 +1,3 @@
-from container import Container
-from container import EmptyContainerException
 """
 TOAHModel:  Model a game of Tour of Anne Hoy
 Cheese:   Model a cheese with a given (relative) size
@@ -170,9 +168,9 @@ class TOAHModel:
 
         return lines
 
-class Stack(Container):
+class Stool:
     """
-    Last-in, first-out (LIFO) stack.
+    Last-in, first-out stool stack.
     """
 
     def __init__(self):
