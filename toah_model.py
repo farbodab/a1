@@ -55,6 +55,14 @@ class TOAHModel:
         5
         """
         self.number_of_stools = number_of_stools
+        self._key = -1
+        self._storage = {}
+        self.fill_first_stool =
+        self._key += 1
+        self._storage[self._key] = obj
+
+        self.get_number_of_stools = number_of_stools
+        self._move_seq = MoveSequence([])
 
         # you must have _move_seq as well as any other attributes you choose
         # self._move_seq = MoveSequence([])
