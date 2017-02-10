@@ -40,8 +40,8 @@ def move(model, origin, dest):
         stool number you want to move cheese to
     @rtype: None
     """
-    pass
 
+    model.move(origin, dest)
 
 class ConsoleController:
     """ Controller for text console.
@@ -55,7 +55,8 @@ class ConsoleController:
         @param int number_of_stools:
         @rtype: None
         """
-        pass
+        self.num_cheeses = number_of_cheeses
+        self.model = TOAHModel(number_of_stools)
 
     def play_loop(self):
         """ Play Console-based game.
@@ -76,7 +77,22 @@ class ConsoleController:
         -After each valid move, use the method TOAHModel.__str__ that we've
         provided to print a representation of the current state of the game.
         """
-        pass
+
+        print("Welcome to this amazinngggggg game. The goal of the game is to rearrange the tower in the last stool. You may stack pieces that are smaller on each other. To make a move type 'move'. To exit the game at any point, just type 'exit'")
+
+        command = input()
+        if command == 'move':
+            print("which stool do you want to move from?")
+            move_from = input()
+            print("which stool do you want to move to?")
+            move_to = input()
+            move(self.model, move_from, move_to)
+            self.play_loop()
+        elif command == 'exit':
+            pass
+
+
+
 
 
 if __name__ == '__main__':
@@ -86,5 +102,5 @@ if __name__ == '__main__':
 
     # Leave lines below as they are, so you will know what python_ta checks.
     # You will need consolecontroller_pyta.txt in the same folder.
-    import python_ta
-    python_ta.check_all(config="consolecontroller_pyta.txt")
+    #import python_ta
+    #python_ta.check_all(config="consolecontroller_pyta.txt")

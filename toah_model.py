@@ -108,6 +108,23 @@ class TOAHModel:
 
         self._storage[stool_id].append(cheese)
 
+    def move(self, from_stool, stool_index):
+        """
+        :param from_stool:
+        :type from_stool:
+        :param stool_index:
+        :type stool_index:
+        :return:
+        :rtype:
+        """
+        to_be_moved = self._storage[from_stool][-1]
+        if self._storage[stool_index] != [] and to_be_moved.size > self._storage[stool_index][-1].size:
+            raise Exception("Cannot put bigger cheese on smaller one!")
+        else:
+            self._storage[stool_index].append(to_be_moved)
+            self._storage[from_stool].remove(to_be_moved)
+
+
     def get_cheese_location(self, cheese):
         """
         @param TOAHModel self: this TOAHModel
@@ -127,8 +144,9 @@ class TOAHModel:
         @rtype: None
         """
 
-        top_cheese = self._storage[stool_index][-1]
-        return top_cheese
+        if self._storage[stool_index] != []:
+            top_cheese = self._storage[stool_index][-1]
+            return top_cheese
 
     def get_number_of_cheeses(self):
         """ Returns the total number of cheeses in the game
@@ -320,7 +338,8 @@ class MoveSequence(object):
         >>> ms.get_move(0) == (1, 2)
         True
         """
-        # Exception if not (0 <= i < self.length)
+        if not (0 <= i < self.length):
+            raise Exception("Position must be between 0 and total number of moves.")
         return self._moves[i]
 
     def add_move(self, src_stool, dest_stool):
