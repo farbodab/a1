@@ -107,8 +107,30 @@ class TOAHModel:
         :rtype:
         """
 
-        self._storage
-        if self._storage[1].append(Cheese(num))
+        self._storage[stool_id].append(cheese)
+
+    def get_cheese_location(self, cheese):
+        """
+        :param cheese:
+        :type cheese:
+        :return:
+        :rtype:
+        """
+
+        for stool in self._storage:
+            for item in self._storage[stool]:
+                if item.size == cheese.size:
+                    return stool
+
+    def get_top_cheese(self, stool_index):
+        """
+        :param cheese:
+        :type cheese:
+        :return:
+        :rtype:
+        """
+        x = len(self._storage[stool_index])
+        top_cheese = self._storage[stool_index][x - 1]
 
     def get_number_of_cheeses(self):
         """ Returns the total number of cheeses in the game
@@ -272,7 +294,6 @@ class Cheese:
 class IllegalMoveError(Exception):
     """ Exception indicating move that violate TOAHModel
     """
-
     pass
 
 
