@@ -40,8 +40,14 @@ def move(model, origin, dest):
         stool number you want to move cheese to
     @rtype: None
     """
-
-    model.move(origin, dest)
+    origin = int(origin)
+    dest = int(dest)
+    to_be_moved = model._storage[origin][-1]
+    if model._storage[dest] != [] and to_be_moved.size > model._storage[dest][-1].size:
+        raise Exception("Cannot put bigger cheese on smaller one!")
+    else:
+        model._storage[dest].append(to_be_moved)
+        model._storage[origin].remove(to_be_moved)
 
 class ConsoleController:
     """ Controller for text console.
@@ -55,8 +61,8 @@ class ConsoleController:
         @param int number_of_stools:
         @rtype: None
         """
-        self.num_cheeses = number_of_cheeses
         self.model = TOAHModel(number_of_stools)
+        self.model.fill_first_stool(number_of_cheeses)
 
     def play_loop(self):
         """ Play Console-based game.
@@ -78,7 +84,7 @@ class ConsoleController:
         provided to print a representation of the current state of the game.
         """
 
-        print("Welcome to this amazinngggggg game. The goal of the game is to rearrange the tower in the last stool. You may stack pieces that are smaller on each other. To make a move type 'move'. To exit the game at any point, just type 'exit'")
+        print("To make a move type 'move'. To exit the game at any point, just type 'exit'")
 
         command = input()
         if command == 'move':
@@ -87,9 +93,13 @@ class ConsoleController:
             print("which stool do you want to move to?")
             move_to = input()
             move(self.model, move_from, move_to)
+            TOAHModel.__str__()
             self.play_loop()
         elif command == 'exit':
             pass
+        else:
+            print("invalid command.")
+            self.play_loop()
 
 
 
@@ -99,8 +109,14 @@ if __name__ == '__main__':
     # TODO:
     # You should initiate game play here. Your game should be playable by
     # running this file.
+    controller = ConsoleController(4, 5)
+    
+    ConsoleController.play_loop(controller)
 
     # Leave lines below as they are, so you will know what python_ta checks.
     # You will need consolecontroller_pyta.txt in the same folder.
     #import python_ta
     #python_ta.check_all(config="consolecontroller_pyta.txt")
+
+
+

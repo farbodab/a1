@@ -111,11 +111,11 @@ class TOAHModel:
     def move(self, from_stool, stool_index):
         """
         :param from_stool:
-        :type from_stool:
+        :type from_stool: int
         :param stool_index:
-        :type stool_index:
+        :type stool_index: int
         :return:
-        :rtype:
+        :rtype:none
         """
         to_be_moved = self._storage[from_stool][-1]
         if self._storage[stool_index] != [] and to_be_moved.size > self._storage[stool_index][-1].size:
