@@ -100,21 +100,19 @@ class TOAHModel:
     def add(self, cheese, stool_id):
         """
 
-        :param cheese:
-        :type cheese:
-        :param stool_id:
-        :type stool_id:
-        :rtype:
+        @param TOAHModel self: this TOAHModel
+        @param Cheese: this Cheese
+        @param int: id or placement of the stool
+        @rtype: None
         """
 
         self._storage[stool_id].append(cheese)
 
     def get_cheese_location(self, cheese):
         """
-        :param cheese:
-        :type cheese:
-        :return:
-        :rtype:
+        @param TOAHModel self: this TOAHModel
+        @param Cheese: this Cheese
+        @rtype int: id or placement of the corresponding stool
         """
 
         for stool in self._storage:
@@ -124,13 +122,13 @@ class TOAHModel:
 
     def get_top_cheese(self, stool_index):
         """
-        :param cheese:
-        :type cheese:
-        :return:
-        :rtype:
+        @param TOAHModel self: this TOAHModel
+        @param int: id or placement of the stool
+        @rtype: None
         """
-        x = len(self._storage[stool_index])
-        top_cheese = self._storage[stool_index][x - 1]
+
+        top_cheese = self._storage[stool_index][-1]
+        return top_cheese
 
     def get_number_of_cheeses(self):
         """ Returns the total number of cheeses in the game
