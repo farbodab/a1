@@ -37,6 +37,7 @@ class TOAHModel:
     that a larger cheese may not be placed on a smaller one.
     """
 
+
     def __init__(self, number_of_stools):
         """ Create new TOAHModel with empty stools
         to hold stools of cheese.
@@ -52,7 +53,6 @@ class TOAHModel:
         >>> M.get_number_of_cheeses()
         5
         """
-        self.number_of_stools = number_of_stools
         self._key = -1
         self._storage = {}
         self.fill_first_stool =
@@ -62,10 +62,9 @@ class TOAHModel:
         self.get_number_of_stools = number_of_stools
         self._move_seq = MoveSequence([])
 
+
         # you must have _move_seq as well as any other attributes you choose
         # self._move_seq = MoveSequence([])
-
-
 
     def get_move_seq(self):
         """ Return the move sequence
@@ -105,7 +104,9 @@ class TOAHModel:
         >>> m1 == m2
         True
         """
-        pass
+
+        # have we even defined self.move yet? Yes. see below
+
 
     def _cheese_at(self, stool_index, stool_height):
         # """ Return (stool_height)th from stool_index stool, if possible.
@@ -168,61 +169,6 @@ class TOAHModel:
 
         return lines
 
-class Stool:
-    """
-    Last-in, first-out stool stack.
-    """
-
-    def __init__(self):
-        """
-        Create a new, empty Stack self.
-
-        Overrides Container.__init__
-
-        @param Stack self: this stack
-        @rtype: None
-        """
-        self._contents = []
-
-    def add(self, obj):
-        """
-        Add object obj to top of Stack self.
-
-        @param Stack self: this Stack
-        @param object obj: object to place on Stack
-        @rtype: None
-        """
-        self._contents.append(obj)
-
-    def remove(self):
-        """
-        Remove and return top element of Stack self.
-
-        Assume Stack self is not empty.
-
-        @param Stack self: this Stack
-        @rtype: object
-
-        >>> s = Stack()
-        >>> s.add(5)
-        >>> s.add(7)
-        >>> s.remove()
-        7
-        """
-        if self.is_empty():
-            raise EmptyContainerException
-
-        return self._contents.pop()
-
-    def is_empty(self):
-        """
-        Return whether Stack self is empty.
-
-        @param Stack self: this Stack
-        @rtype: bool
-        """
-        return len(self._contents) == 0
-
 
 class Cheese:
     """ A cheese for stacking in a TOAHModel
@@ -244,6 +190,7 @@ class Cheese:
         >>> c.size
         3
         """
+
         self.size = size
 
     def __eq__(self, other):
@@ -257,6 +204,16 @@ class Cheese:
         @rtype: bool
         """
         return self.size == other.size
+
+class Stool:
+    """ A stool for stacking cheese in a TOAHmodel.
+
+    === Attributes ===
+
+    @param int cheese_num: number of cheeses
+    """
+
+    def __init__(self):
 
 
 class IllegalMoveError(Exception):
