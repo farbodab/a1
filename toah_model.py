@@ -55,11 +55,12 @@ class TOAHModel:
         """
         # {1: [Cheese(3), Cheese(2), Cheese(1)], 2: [Cheese(2)]}
         self._storage = {}
+        self.moves = 0
         for i in range(0, number_of_stools):
             self._storage[i] = []
 
-        self.get_number_of_stools = number_of_stools
-        self.number_of_moves = 0
+        #self.get_number_of_stools = number_of_stools
+        #self.number_of_moves = 0
         self._move_seq = MoveSequence([])
 
     def fill_first_stool(self, cheese_num):
@@ -70,16 +71,44 @@ class TOAHModel:
         @rtype: None
         """
 
-        self._storage[stool_id] = [Cheese
+        num = cheese_num
+        while num > 0:
+            self._storage[1].append(Cheese(num))
+            num -= 1
 
+    def number_of_moves(self):
+        """
+        @param TOAHModel self: this TOAHModel
+        @rtype int: number of moves
+        """
+
+        return self.moves
         # you must have _move_seq as well as any other attributes you choose
 
-    """def get_number_of_stools(self):
-        """"""
+    def get_number_of_stools(self):
+        """
+
+        @param TOAHModel self: this TOAHModel
+        @rtype int: number of stools
+        """
+
         stool_n = 0
         for item in self._storage:
             stool_n += 1
-        return stool_n"""
+        return stool_n
+
+    def add(self, cheese, stool_id):
+        """
+
+        :param cheese:
+        :type cheese:
+        :param stool_id:
+        :type stool_id:
+        :rtype:
+        """
+
+        self._storage
+        if self._storage[1].append(Cheese(num))
 
     def get_number_of_cheeses(self):
         """ Returns the total number of cheeses in the game
@@ -90,7 +119,7 @@ class TOAHModel:
 
         total_cheese = 0
         for item in self._storage:
-            total_cheese += self._storage[item]
+            total_cheese += len(self._storage[item])
         return total_cheese
 
     def get_move_seq(self):
@@ -131,10 +160,15 @@ class TOAHModel:
         >>> m1 == m2
         True
         """
-
-
-
-        # have we even defined self.move yet? Yes. see below
+        # {1:[Cheese(3), Cheese(2)], 2:[Cheese(1)]} vs {1:[Cheese(3), Cheese(1)], 2:[Cheese(1)]}
+        for stool in self._storage:
+            id = self._storage[stool]
+            x = 0
+            for cheese in id:
+                x += 1
+                if cheese != other._storage[stool][x]:
+                    return False
+        return True
 
 
     def _cheese_at(self, stool_index, stool_height):
@@ -173,7 +207,7 @@ class TOAHModel:
             if len(all_cheeses) > 0 else 0
         stool_str = "=" * (2 * max_cheese_size + 1)
         stool_spacing = "  "
-        stools_str = (stool_str + stool_spacing) *      self.get_number_of_stools()
+        stools_str = (stool_str + stool_spacing) * self.get_number_of_stools()
 
         def _cheese_str(size):
             # helper for string representation of cheese
@@ -238,6 +272,7 @@ class Cheese:
 class IllegalMoveError(Exception):
     """ Exception indicating move that violate TOAHModel
     """
+
     pass
 
 
