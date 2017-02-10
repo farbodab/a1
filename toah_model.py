@@ -53,18 +53,58 @@ class TOAHModel:
         >>> M.get_number_of_cheeses()
         5
         """
-        self._key = -1
+        #self._key = -1
         self._storage = {}
-        self.fill_first_stool =
-        self._key += 1
-        self._storage[self._key] = obj
+        for i in range(0, number_of_stools):
+            self._storage[i] = 0
 
         self.get_number_of_stools = number_of_stools
+        self.number_of_moves = 0
         self._move_seq = MoveSequence([])
 
+    def fill_nth_stool(self, stool_id, cheese_num):
+        """ Fill the nth stool with cheese_num number of cheeses.
+
+        @param TOAHModel self: this TOAHModel
+        @param int stool_id: Stool placement in TOAHModel
+        @rtype: None
+        """
+
+        if stool_id in self._storage:
+            self._storage[stool_id] = cheese_num
+        else:
+            raise Exception("No Stool with this id!")
+
+    def fill_first_stool(self, cheese_num):
+        """ Fill the nth stool with cheese_num number of cheeses.
+
+        @param TOAHModel self: this TOAHModel
+        @param int stool_id: Stool placement in TOAHModel
+        @rtype: None
+        """
+
+        self.fill_nth_stool(1, cheese_num)
 
         # you must have _move_seq as well as any other attributes you choose
-        # self._move_seq = MoveSequence([])
+
+    """def get_number_of_stools(self):
+        """"""
+        stool_n = 0
+        for item in self._storage:
+            stool_n += 1
+        return stool_n"""
+
+    def get_number_of_cheeses(self):
+        """ Returns the total number of cheeses in the game
+
+        @param TOAHModel self: this TOAHModel
+        @rtype: int
+        """
+
+        total_cheese = 0
+        for item in self._storage:
+            total_cheese += self._storage[item]
+        return total_cheese
 
     def get_move_seq(self):
         """ Return the move sequence
@@ -144,7 +184,7 @@ class TOAHModel:
             if len(all_cheeses) > 0 else 0
         stool_str = "=" * (2 * max_cheese_size + 1)
         stool_spacing = "  "
-        stools_str = (stool_str + stool_spacing) * self.get_number_of_stools()
+        stools_str = (stool_str + stool_spacing) *      self.get_number_of_stools()
 
         def _cheese_str(size):
             # helper for string representation of cheese
@@ -300,9 +340,9 @@ class MoveSequence(object):
 
 
 if __name__ == '__main__':
-    #    import doctest
-    #    doctest.testmod(verbose=True)
+    import doctest
+    doctest.testmod(verbose=True)
     # Leave lines below to see what python_ta checks.
     # File toahmodel_pyta.txt must be in same folder.
-    import python_ta
-    python_ta.check_all(config="toahmodel_pyta.txt")
+    #import python_ta
+    #python_ta.check_all(config="toahmodel_pyta.txt")
