@@ -53,27 +53,14 @@ class TOAHModel:
         >>> M.get_number_of_cheeses()
         5
         """
-        #self._key = -1
+        # {1: [Cheese(3), Cheese(2), Cheese(1)], 2: [Cheese(2)]}
         self._storage = {}
         for i in range(0, number_of_stools):
-            self._storage[i] = 0
+            self._storage[i] = []
 
         self.get_number_of_stools = number_of_stools
         self.number_of_moves = 0
         self._move_seq = MoveSequence([])
-
-    def fill_nth_stool(self, stool_id, cheese_num):
-        """ Fill the nth stool with cheese_num number of cheeses.
-
-        @param TOAHModel self: this TOAHModel
-        @param int stool_id: Stool placement in TOAHModel
-        @rtype: None
-        """
-
-        if stool_id in self._storage:
-            self._storage[stool_id] = cheese_num
-        else:
-            raise Exception("No Stool with this id!")
 
     def fill_first_stool(self, cheese_num):
         """ Fill the nth stool with cheese_num number of cheeses.
@@ -83,7 +70,7 @@ class TOAHModel:
         @rtype: None
         """
 
-        self.fill_nth_stool(1, cheese_num)
+        self._storage[stool_id] = [Cheese
 
         # you must have _move_seq as well as any other attributes you choose
 
@@ -144,6 +131,8 @@ class TOAHModel:
         >>> m1 == m2
         True
         """
+
+
 
         # have we even defined self.move yet? Yes. see below
 
@@ -244,16 +233,6 @@ class Cheese:
         @rtype: bool
         """
         return self.size == other.size
-
-class Stool:
-    """ A stool for stacking cheese in a TOAHmodel.
-
-    === Attributes ===
-
-    @param int cheese_num: number of cheeses
-    """
-
-    def __init__(self):
 
 
 class IllegalMoveError(Exception):
