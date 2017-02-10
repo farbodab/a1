@@ -54,13 +54,11 @@ class TOAHModel:
         5
         """
         # {1: [Cheese(3), Cheese(2), Cheese(1)], 2: [Cheese(2)]}
-        self._storage = {}
+        self._stools = {}
         self.moves = 0
         for i in range(0, number_of_stools):
-            self._storage[i] = []
+            self._stools[i] = []
 
-        #self.get_number_of_stools = number_of_stools
-        #self.number_of_moves = 0
         self._move_seq = MoveSequence([])
 
     def fill_first_stool(self, cheese_num):
@@ -73,7 +71,7 @@ class TOAHModel:
 
         num = cheese_num
         while num > 0:
-            self._storage[1].append(Cheese(num))
+            self._stools[0].append(Cheese(num))
             num -= 1
 
     def number_of_moves(self):
@@ -93,7 +91,7 @@ class TOAHModel:
         """
 
         stool_n = 0
-        for item in self._storage:
+        for item in self._stools:
             stool_n += 1
         return stool_n
 
@@ -106,7 +104,7 @@ class TOAHModel:
         @rtype: None
         """
 
-        self._storage[stool_id].append(cheese)
+        self._stools[stool_id].append(cheese)
 
     def move(self, from_stool, stool_index):
         """
@@ -117,12 +115,12 @@ class TOAHModel:
         :return:
         :rtype:none
         """
-        to_be_moved = self._storage[from_stool][-1]
-        if self._storage[stool_index] != [] and to_be_moved.size > self._storage[stool_index][-1].size:
+        to_be_moved = self._stools[from_stool][-1]
+        if self._stools[stool_index] != [] and to_be_moved.size > self._stools[stool_index][-1].size:
             raise Exception("Cannot put bigger cheese on smaller one!")
         else:
-            self._storage[stool_index].append(to_be_moved)
-            self._storage[from_stool].remove(to_be_moved)
+            self._stools[stool_index].append(to_be_moved)
+            self._stools[from_stool].remove(to_be_moved)
 
 
     def get_cheese_location(self, cheese):
@@ -132,8 +130,8 @@ class TOAHModel:
         @rtype int: id or placement of the corresponding stool
         """
 
-        for stool in self._storage:
-            for item in self._storage[stool]:
+        for stool in self._stools:
+            for item in self._stools[stool]:
                 if item.size == cheese.size:
                     return stool
 
@@ -144,8 +142,8 @@ class TOAHModel:
         @rtype: None
         """
 
-        if self._storage[stool_index] != []:
-            top_cheese = self._storage[stool_index][-1]
+        if self._stools[stool_index] != []:
+            top_cheese = self._stools[stool_index][-1]
             return top_cheese
 
     def get_number_of_cheeses(self):
@@ -156,8 +154,8 @@ class TOAHModel:
         """
 
         total_cheese = 0
-        for item in self._storage:
-            total_cheese += len(self._storage[item])
+        for item in self._stools:
+            total_cheese += len(self._stools[item])
         return total_cheese
 
     def get_move_seq(self):
@@ -199,12 +197,12 @@ class TOAHModel:
         True
         """
         # {1:[Cheese(3), Cheese(2)], 2:[Cheese(1)]} vs {1:[Cheese(3), Cheese(1)], 2:[Cheese(1)]}
-        for stool in self._storage:
-            id = self._storage[stool]
+        for stool in self._stools:
+            id = self._stools[stool]
             x = 0
             for cheese in id:
                 x += 1
-                if cheese != other._storage[stool][x]:
+                if cheese != other._stools[stool][x]:
                     return False
         return True
 

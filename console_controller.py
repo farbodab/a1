@@ -42,12 +42,16 @@ def move(model, origin, dest):
     """
     origin = int(origin)
     dest = int(dest)
-    to_be_moved = model._storage[origin][-1]
-    if model._storage[dest] != [] and to_be_moved.size > model._storage[dest][-1].size:
-        raise Exception("Cannot put bigger cheese on smaller one!")
+    if model._stools[origin] != []:
+        to_be_moved = model._stools[origin][-1]
+        if model._stools[dest] != [] and to_be_moved.size > model._stools[dest][-1].size:
+            print("Cannot put bigger cheese on smaller one!")
+        else:
+            model._stools[dest].append(to_be_moved)
+            model._stools[origin].remove(to_be_moved)
     else:
-        model._storage[dest].append(to_be_moved)
-        model._storage[origin].remove(to_be_moved)
+        print("No cheese exists there. Try again")
+
 
 class ConsoleController:
     """ Controller for text console.
@@ -83,17 +87,16 @@ class ConsoleController:
         -After each valid move, use the method TOAHModel.__str__ that we've
         provided to print a representation of the current state of the game.
         """
-
+        print(self.model)
         print("To make a move type 'move'. To exit the game at any point, just type 'exit'")
 
         command = input()
         if command == 'move':
-            print("which stool do you want to move from?")
+            print("Which stool do you want to move from?")
             move_from = input()
-            print("which stool do you want to move to?")
+            print("Which stool do you want to move to?")
             move_to = input()
             move(self.model, move_from, move_to)
-            TOAHModel.__str__()
             self.play_loop()
         elif command == 'exit':
             pass
@@ -109,8 +112,7 @@ if __name__ == '__main__':
     # TODO:
     # You should initiate game play here. Your game should be playable by
     # running this file.
-    controller = ConsoleController(4, 5)
-    
+    controller = ConsoleController(5, 4)
     ConsoleController.play_loop(controller)
 
     # Leave lines below as they are, so you will know what python_ta checks.
