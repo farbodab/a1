@@ -42,8 +42,22 @@ def tour_of_four_stools(model, delay_btw_moves=0.5, animate=False):
     @type animate: bool
         animate the tour or not
     """
-    pass
 
+    def three_peg_TOAH(model, cheese_amount, start_peg, end_peg, inter_peg):
+        """
+        Solution for three-peg TOAH model
+        :param start_peg: int
+        :param end_peg: int
+        """
+        if cheese_amount >= 1:
+            three_peg_TOAH(model, cheese_amount - 1, start_peg, inter_peg, end_peg)
+            model.move(start_peg, end_peg)
+            three_peg_TOAH(model, cheese_amount - 1, inter_peg, end_peg, start_peg)
+
+    n = len(model._stools[0])
+    three_peg_TOAH(model, n-1, 0, 2, 1)
+    model.move(0, 3)
+    three_peg_TOAH(model, n-1, 2, 3, 1)
 
 if __name__ == '__main__':
     num_cheeses = 5
@@ -52,7 +66,7 @@ if __name__ == '__main__':
 
     # DO NOT MODIFY THE CODE BELOW.
     four_stools = TOAHModel(4)
-    four_stools.fill_first_stool(number_of_cheeses=num_cheeses)
+    four_stools.fill_first_stool(number_of_cheeses = num_cheeses)
 
     tour_of_four_stools(four_stools,
                         animate=console_animate,
