@@ -29,6 +29,7 @@ functions to run TOAH tours.
 # solution for 'if __name__ == "main":'
 import time
 from toah_model import TOAHModel
+import math
 
 
 def tour_of_four_stools(model, delay_btw_moves=0.5, animate=True):
@@ -60,11 +61,10 @@ def tour_of_four_stools(model, delay_btw_moves=0.5, animate=True):
             three_stools_solution(model, cheese_amount - 1, start_stool, inter_stool, end_stool)
             model.move(start_stool, end_stool)
             three_stools_solution(model, cheese_amount - 1, inter_stool, end_stool, start_stool)
-
-    n = len(model._stools[0])
-    model.move(0,2)
-    three_stools_solution(model, n-1, 0, 3, 1)
-    model.move(2, 3)
+    n = len(model._stools[0])/2
+    three_stools_solution(model, math.ceil(n), 0, 2, 1)
+    three_stools_solution(model, math.floor(n), 0, 3, 1)
+    three_stools_solution(model, math.ceil(n), 2, 3, 1)
 
 
 if __name__ == '__main__':
