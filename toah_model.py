@@ -121,6 +121,7 @@ class TOAHModel:
         else:
             self._stools[stool_index].append(to_be_moved)
             self._stools[from_stool].remove(to_be_moved)
+            self.moves += 1
 
 
     def get_cheese_location(self, cheese):

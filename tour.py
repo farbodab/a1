@@ -31,7 +31,7 @@ import time
 from toah_model import TOAHModel
 
 
-def tour_of_four_stools(model, delay_btw_moves=0.5, animate=False):
+def tour_of_four_stools(model, delay_btw_moves=0.5, animate=True):
     """Move a tower of cheeses from the first stool in model to the fourth.
 
     @type model: TOAHModel
@@ -43,21 +43,24 @@ def tour_of_four_stools(model, delay_btw_moves=0.5, animate=False):
         animate the tour or not
     """
 
-    def three_peg_TOAH(model, cheese_amount, start_peg, end_peg, inter_peg):
+    def three_stools_solution(model, cheese_amount, start_stool, end_stool, inter_stool):
         """
         Solution for three-peg TOAH model
-        :param start_peg: int
-        :param end_peg: int
+
+        @param model: TOAHModel
+        @param start_stool: int
+        @param end_stool: int
+        @param inter_stool: int
         """
         if cheese_amount >= 1:
-            three_peg_TOAH(model, cheese_amount - 1, start_peg, inter_peg, end_peg)
-            model.move(start_peg, end_peg)
-            three_peg_TOAH(model, cheese_amount - 1, inter_peg, end_peg, start_peg)
+            three_stools_solution(model, cheese_amount - 1, start_stool, inter_stool, end_stool)
+            model.move(start_stool, end_stool)
+            three_stools_solution(model, cheese_amount - 1, inter_stool, end_stool, start_stool)
 
     n = len(model._stools[0])
-    three_peg_TOAH(model, n-1, 0, 2, 1)
+    three_stools_solution(model, n-1, 0, 2, 1)
     model.move(0, 3)
-    three_peg_TOAH(model, n-1, 2, 3, 1)
+    three_stools_solution(model, n-1, 2, 3, 1)
 
 if __name__ == '__main__':
     num_cheeses = 5
@@ -66,7 +69,7 @@ if __name__ == '__main__':
 
     # DO NOT MODIFY THE CODE BELOW.
     four_stools = TOAHModel(4)
-    four_stools.fill_first_stool(number_of_cheeses = num_cheeses)
+    four_stools.fill_first_stool(num_cheeses)
 
     tour_of_four_stools(four_stools,
                         animate=console_animate,
@@ -74,6 +77,6 @@ if __name__ == '__main__':
 
     print(four_stools.number_of_moves())
     # Leave files below to see what python_ta checks.
-    # File tour_pyta.txt must be in same folder
+    # File tour_pyta.txt must be in same folderwwa
     import python_ta
     python_ta.check_all(config="tour_pyta.txt")
