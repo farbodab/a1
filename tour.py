@@ -41,6 +41,10 @@ def tour_of_four_stools(model, delay_btw_moves=0.5, animate=True):
         time delay between moves if console_animate is True
     @type animate: bool
         animate the tour or not
+
+    >>>> M = TOAHModel(4)
+    >>>> M.fill_first_stool(6)
+    >>>> tour_of_four_stools(M)
     """
 
     def three_stools_solution(model, cheese_amount, start_stool, end_stool, inter_stool):
@@ -58,14 +62,15 @@ def tour_of_four_stools(model, delay_btw_moves=0.5, animate=True):
             three_stools_solution(model, cheese_amount - 1, inter_stool, end_stool, start_stool)
 
     n = len(model._stools[0])
-    three_stools_solution(model, n-1, 0, 2, 1)
-    model.move(0, 3)
-    three_stools_solution(model, n-1, 2, 3, 1)
+    model.move(0,2)
+    three_stools_solution(model, n-1, 0, 3, 1)
+    model.move(2, 3)
+
 
 if __name__ == '__main__':
     num_cheeses = 5
     delay_between_moves = 0.5
-    console_animate = False
+    console_animate = True
 
     # DO NOT MODIFY THE CODE BELOW.
     four_stools = TOAHModel(4)
