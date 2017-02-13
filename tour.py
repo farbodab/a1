@@ -32,6 +32,8 @@ from toah_model import TOAHModel
 import math
 
 
+
+
 def tour_of_four_stools(model, delay_btw_moves=0.5, animate=True):
     """Move a tower of cheeses from the first stool in model to the fourth.
 
@@ -48,27 +50,35 @@ def tour_of_four_stools(model, delay_btw_moves=0.5, animate=True):
     >>>> tour_of_four_stools(M)
     """
 
-    def three_stools_solution(model, cheese_amount, start_stool, end_stool, inter_stool):
-        """
-        Solution for three-peg TOAH model
+def three_stools_solution(model, cheese_amount, start_stool, end_stool, inter_stool):
+    """
+    Solution for three-peg TOAH model. Moves cheese_amount cheeses from start_stool
+    to end_stool via inter_stool using the optimal three-stool solution.
 
-        @param model: TOAHModel
-        @param start_stool: int
-        @param end_stool: int
-        @param inter_stool: int
-        """
-        if cheese_amount >= 1:
-            three_stools_solution(model, cheese_amount - 1, start_stool, inter_stool, end_stool)
-            model.move(start_stool, end_stool)
-            three_stools_solution(model, cheese_amount - 1, inter_stool, end_stool, start_stool)
-    z = len(model._stools[0])
-    x = z/2
-    if z == 1:
-        model.move(0,3)
+    @param model: TOAHModel
+    @param start_stool: int
+    @param end_stool: int
+    @param inter_stool: int
+    """
+    if cheese_amount >= 1:
+        three_stools_solution(model, cheese_amount - 1, start_stool, inter_stool, end_stool)
+        model.move(start_stool, end_stool)
+        three_stools_solution(model, cheese_amount - 1, inter_stool, end_stool, start_stool)
+
+def four_stools_solution(model, cheese_amount, start_stool, end_stool, inter_stool1, inter_stool2):
+    x = cheese_amount/2
+    y1 = math.ceil(x)
+    y2 = math.floor(x)
+    if cheese_amount == 1:
+        model.move(start_stool, end_stool)
+    elif cheese_amount == 2:
+        three_stools_solution(model, y1, start_stool, inter_stool2, inter_stool1)
+        three_stools_solution(model, y2, start_stool, end_stool, inter_stool1)
+        three_stools_solution(model, y1, inter_stool2, end_stool, inter_stool1)
     else:
-        three_stools_solution(model, math.ceil(x), 0, 2, 1)
-        three_stools_solution(model, math.floor(x), 0, 3, 1)
-        three_stools_solution(model, math.ceil(x), 2, 3, 1)
+        four_stools_solution(model, y1, start_stool, inter_stool1, inter_stool2, end_stool)
+        three_stools_solution(model, y2, start_stool, end_stool, inter_stool2)
+        four_stools_solution(model, y1, inter_stool1, end_stool, start_stool, inter_stool2)
 
 
 if __name__ == '__main__':
@@ -89,3 +99,14 @@ if __name__ == '__main__':
     # File tour_pyta.txt must be in same folderwwa
     import python_ta
     python_ta.check_all(config="tour_pyta.txt")
+
+"""
+z = len(model._stools[0])
+    x = z/2
+    if z == 1:
+        model.move(0,3)
+    else:
+        three_stools_solution(model, math.ceil(x), 0, 2, 1)
+        three_stools_solution(model, math.floor(x), 0, 3, 1)
+        three_stools_solution(model, math.ceil(x), 2, 3, 1)
+"""
