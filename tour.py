@@ -65,7 +65,35 @@ def three_stools_solution(model, cheese_amount, start_stool, end_stool, inter_st
         model.move(start_stool, end_stool)
         three_stools_solution(model, cheese_amount - 1, inter_stool, end_stool, start_stool)
 
+def animated_three_stools(model, cheese_amount, start_stool, end_stool, inter_stool, delay_btw_moves):
+    """
+    @param model:
+    @param cheese_amount:
+    @param start_stool:
+    @param end_stool:
+    @param inter_stool:
+    @param delay_btw_moves:
+    @return:
+    """
+    if cheese_amount >= 1:
+        animated_three_stools(model, cheese_amount - 1, start_stool, inter_stool, end_stool, delay_btw_moves)
+        model.move(start_stool, end_stool)
+        print(model)
+        animated_three_stools(model, cheese_amount - 1, inter_stool, end_stool, start_stool, delay_btw_moves)
+        time.sleep(delay_btw_moves)
+
 def four_stools_solution(model, cheese_amount, start_stool, end_stool, inter_stool1, inter_stool2):
+    """
+    Solution for four-stool TOAH model. Moves cheese_amount cheese from start_stool to end_stool
+    via inter_stool1 and inter_stool2
+
+    @param model: TOAHModel
+    @param cheese_amount: int
+    @param start_stool: int
+    @param end_stool: int
+    @param inter_stool1: int
+    @param inter_stool2: int
+    """
     x = cheese_amount/2
     y1 = math.ceil(x)
     y2 = math.floor(x)
@@ -79,6 +107,32 @@ def four_stools_solution(model, cheese_amount, start_stool, end_stool, inter_sto
         four_stools_solution(model, y1, start_stool, inter_stool1, inter_stool2, end_stool)
         three_stools_solution(model, y2, start_stool, end_stool, inter_stool2)
         four_stools_solution(model, y1, inter_stool1, end_stool, start_stool, inter_stool2)
+
+def animated_four_stools(model, cheese_amount, start_stool, end_stool, inter_stool1, inter_stool2, delay_btw_moves):
+    """
+    @param model: TOAHModel
+    @param cheese_amount: int
+    @param start_stool: int
+    @param end_stool: int
+    @param inter_stool1: int
+    @param inter_stool2: int
+    @param delay_btw_moves: float
+    """
+    x = cheese_amount/2
+    y1 = math.ceil(x)
+    y2 = math.floor(x)
+    if cheese_amount == 1:
+        model.move(start_stool, end_stool)
+        print(model)
+    elif cheese_amount == 2:
+        animated_three_stools(model, y1, start_stool, inter_stool2, inter_stool1, delay_btw_moves)
+        animated_three_stools(model, y2, start_stool, end_stool, inter_stool1, delay_btw_moves)
+        animated_three_stools(model, y1, inter_stool2, end_stool, inter_stool1, delay_btw_moves)
+    else:
+        animated_four_stools(model, y1, start_stool, inter_stool1, inter_stool2, end_stool, delay_btw_moves)
+        animated_three_stools(model, y2, start_stool, end_stool, inter_stool2, delay_btw_moves)
+        animated_four_stools(model, y1, inter_stool1, end_stool, start_stool, inter_stool2, delay_btw_moves)
+
 
 
 if __name__ == '__main__':
@@ -99,14 +153,3 @@ if __name__ == '__main__':
     # File tour_pyta.txt must be in same folderwwa
     import python_ta
     python_ta.check_all(config="tour_pyta.txt")
-
-"""
-z = len(model._stools[0])
-    x = z/2
-    if z == 1:
-        model.move(0,3)
-    else:
-        three_stools_solution(model, math.ceil(x), 0, 2, 1)
-        three_stools_solution(model, math.floor(x), 0, 3, 1)
-        three_stools_solution(model, math.ceil(x), 2, 3, 1)
-"""
