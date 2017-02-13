@@ -49,6 +49,11 @@ def tour_of_four_stools(model, delay_btw_moves=0.5, animate=True):
     >>>> M.fill_first_stool(6)
     >>>> tour_of_four_stools(M)
     """
+    cheecount = len(model._stools[0])
+    if animate == True:
+        animated_four_stools(model, cheecount, 0, 3, 1, 2, delay_btw_moves)
+    else:
+        four_stools_solution(model, cheecount, 0, 3, 1, 2)
 
 def three_stools_solution(model, cheese_amount, start_stool, end_stool, inter_stool):
     """
