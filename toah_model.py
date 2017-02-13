@@ -108,12 +108,10 @@ class TOAHModel:
 
     def move(self, from_stool, stool_index):
         """
-        :param from_stool:
-        :type from_stool: int
-        :param stool_index:
-        :type stool_index: int
-        :return:
-        :rtype:none
+        @param TOAHModel self: this TOAHModel
+        @param from_stool int: id of stool that cheese is moved away from
+        @param stool_index int: id of stool that cheese is moved to
+        @rtype: None
         """
         to_be_moved = self._stools[from_stool][-1]
         if self._stools[stool_index] != [] and to_be_moved.size > self._stools[stool_index][-1].size:
