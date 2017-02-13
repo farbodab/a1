@@ -335,7 +335,7 @@ class MoveSequence(object):
         >>> ms.get_move(0) == (1, 2)
         True
         """
-        if not (0 <= i < self.length):
+        if not (0 <= i < len(self._moves)):
             raise Exception("Position must be between 0 and total number of moves.")
         return self._moves[i]
 
