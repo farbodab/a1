@@ -113,10 +113,10 @@ def four_stools_solution(model, ch_num, start_stool, end_stool, inter_stool1, in
         The other stool used as an intermediate
     """
     x = ch_num
-    # The below value was calculated by running tests for optimal i values up to ch_num=100,
-    # and used a polynomial equation that approximates the discrete values.
-    # Probably does not hold for arbitrarily large values of ch_num
-    y1 = x - math.floor(0.0007*x**2 + 0.1806*x + 2.265)
+    # The below value was calculated by running tests for optimal i values up to ch_num=525,
+    # and used a polynomial of degree 6 that approximates the discrete values.
+    # Does not hold for arbitrarily large values of ch_num
+    y1 = x - math.floor(-2*10**(-14)*x**6 + 3*10**(-11)*x**5 - 2*10**(-8)*x**4 + 7*10**(-6)*x**3 - 0.0014*x**2 + 0.1999*x + 2.1404)
     y2 = x - y1
     if ch_num == 1:
         model.move(start_stool, end_stool)
@@ -144,7 +144,7 @@ def animated_four_stools(model, ch_num, start_stool, end_stool, inter_stool1, in
     @param delay_btw_moves: float
     """
     x = ch_num
-    y1 = x - math.floor(0.0007*x**2 + 0.1806*x + 2.265)
+    y1 = x - math.floor(-2*10**(-14)*x**6 + 3*10**(-11)*x**5 - 2*10**(-8)*x**4 + 7*10**(-6)*x**3 - 0.0014*x**2 + 0.1999*x + 2.1404)
     y2 = x - y1
     if ch_num == 1:
         model.move(start_stool, end_stool)
@@ -159,9 +159,8 @@ def animated_four_stools(model, ch_num, start_stool, end_stool, inter_stool1, in
         animated_four_stools(model, y1, inter_stool1, end_stool, start_stool, inter_stool2, delay_btw_moves)
 
 if __name__ == '__main__':
-    num_cheeses = 6
     delay_between_moves = 0.5
-    console_animate = True
+    console_animate = False
 
     # DO NOT MODIFY THE CODE BELOW.
     four_stools = TOAHModel(4)
