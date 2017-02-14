@@ -260,5 +260,5 @@ if __name__ == "__main__":
     tk.mainloop()
     # Leave lines below so you can see what python_ta checks
     # File guicontroller_pyta.txt must be in same folder.
-    #import python_ta
-    #python_ta.check_all(config="guicontroller_pyta.txt")
+    import python_ta
+    python_ta.check_all(config="guicontroller_pyta.txt")

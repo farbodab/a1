@@ -1,9 +1,6 @@
 """
 functions to run TOAH tours.
 """
-# this is commit 3
-#this is gonna be amazing
-#why wont this be commit 2
 # Copyright 2013, 2014, 2017 Gary Baumgartner, Danny Heap, Dustin Wehr,
 # Bogdan Simion, Jacqueline Smith, Dan Zingaro
 # Distributed under the terms of the GNU General Public License.
@@ -32,10 +29,7 @@ import math
 from toah_model import TOAHModel
 
 
-
-
-
-def tour_of_four_stools(model, delay_btw_moves=0.5, animate=True):
+def tour_of_four_stools(model, delay_btw_moves=0.5, animate=False):
     """Move a tower of cheeses from the first stool in model to the fourth.
 
     @type model: TOAHModel
@@ -53,8 +47,11 @@ def tour_of_four_stools(model, delay_btw_moves=0.5, animate=True):
     cheecount = len(model._stools[0])
     if animate is True:
         animated_four_stools(model, cheecount, 0, 3, 1, 2, delay_btw_moves)
+        print("Number of moves: {}".format(model.moves))
     else:
         four_stools_solution(model, cheecount, 0, 3, 1, 2)
+        print("Number of moves: {}".format(model.moves))
+
 
 def three_stools_solution(model, ch_num, start_stool, end_stool, inter_stool):
     """
@@ -71,6 +68,7 @@ def three_stools_solution(model, ch_num, start_stool, end_stool, inter_stool):
         model.move(start_stool, end_stool)
         three_stools_solution(model, ch_num - 1, inter_stool, end_stool, start_stool)
 
+
 def animated_three_stools(model, ch_num, start_stool, end_stool, inter_stool, delay_btw_moves):
     """
     @param model:
@@ -79,7 +77,6 @@ def animated_three_stools(model, ch_num, start_stool, end_stool, inter_stool, de
     @param end_stool:
     @param inter_stool:
     @param delay_btw_moves:
-    @return:
     """
     if ch_num >= 1:
         animated_three_stools(model, ch_num- 1, start_stool, inter_stool, end_stool, delay_btw_moves)
@@ -87,6 +84,7 @@ def animated_three_stools(model, ch_num, start_stool, end_stool, inter_stool, de
         print(model)
         animated_three_stools(model, ch_num - 1, inter_stool, end_stool, start_stool, delay_btw_moves)
         time.sleep(delay_btw_moves)
+
 
 def four_stools_solution(model, ch_num, start_stool, end_stool, inter_stool1, inter_stool2):
     """
@@ -117,6 +115,9 @@ def four_stools_solution(model, ch_num, start_stool, end_stool, inter_stool1, in
 
 def animated_four_stools(model, ch_num, start_stool, end_stool, inter_stool1, inter_stool2, delay_btw_moves):
     """
+    I cannot seem to implement animations using the optimal solution without hitting the python recusion limit;
+    sub-optimal solution animated.
+
     @param model: TOAHModel
     @param ch_num: int
     @param start_stool: int
@@ -125,9 +126,9 @@ def animated_four_stools(model, ch_num, start_stool, end_stool, inter_stool1, in
     @param inter_stool2: int
     @param delay_btw_moves: float
     """
-    x = ch_num/2
-    y1 = math.ceil(x)
-    y2 = math.floor(x)
+    x = ch_num
+    y1 = x - math.floor(0.0007*x**2 + 0.1806*x + 2.265)
+    y2 = x - y1
     if ch_num == 1:
         model.move(start_stool, end_stool)
         print(model)
@@ -143,9 +144,9 @@ def animated_four_stools(model, ch_num, start_stool, end_stool, inter_stool1, in
 
 
 if __name__ == '__main__':
-    num_cheeses = 3
+    num_cheeses = 6
     delay_between_moves = 0.5
-    console_animate = False
+    console_animate = True
 
     # DO NOT MODIFY THE CODE BELOW.
     four_stools = TOAHModel(4)

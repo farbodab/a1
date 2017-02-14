@@ -203,7 +203,7 @@ class TOAHModel:
                 x += 1
                 if cheese != other._stools[stool][x]:
                     return False
-        return True
+            return True
 
 
     def _cheese_at(self, stool_index, stool_height):
