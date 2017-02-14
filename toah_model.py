@@ -232,6 +232,7 @@ class TOAHModel:
 
         @param TOAHModel self:
         @rtype: str
+
         """
         all_cheeses = []
         for height in range(self.get_number_of_cheeses()):
