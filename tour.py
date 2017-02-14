@@ -28,8 +28,9 @@ functions to run TOAH tours.
 # you may want to use time.sleep(delay_between_moves) in your
 # solution for 'if __name__ == "main":'
 import time
-from toah_model import TOAHModel
 import math
+from toah_model import TOAHModel
+
 
 
 
@@ -50,14 +51,14 @@ def tour_of_four_stools(model, delay_btw_moves=0.5, animate=True):
     >>>> tour_of_four_stools(M)
     """
     cheecount = len(model._stools[0])
-    if animate == True:
+    if animate is True:
         animated_four_stools(model, cheecount, 0, 3, 1, 2, delay_btw_moves)
     else:
         four_stools_solution(model, cheecount, 0, 3, 1, 2)
 
-def three_stools_solution(model, cheese_amount, start_stool, end_stool, inter_stool):
+def three_stools_solution(model, ch_num, start_stool, end_stool, inter_stool):
     """
-    Solution for three-peg TOAH model. Moves cheese_amount cheeses from start_stool
+    Solution for three-peg TOAH model. Moves ch_num cheeses from start_stool
     to end_stool via inter_stool using the optimal three-stool solution.
 
     @param model: TOAHModel
@@ -65,46 +66,46 @@ def three_stools_solution(model, cheese_amount, start_stool, end_stool, inter_st
     @param end_stool: int
     @param inter_stool: int
     """
-    if cheese_amount >= 1:
-        three_stools_solution(model, cheese_amount - 1, start_stool, inter_stool, end_stool)
+    if ch_num >= 1:
+        three_stools_solution(model, ch_num - 1, start_stool, inter_stool, end_stool)
         model.move(start_stool, end_stool)
-        three_stools_solution(model, cheese_amount - 1, inter_stool, end_stool, start_stool)
+        three_stools_solution(model, ch_num - 1, inter_stool, end_stool, start_stool)
 
-def animated_three_stools(model, cheese_amount, start_stool, end_stool, inter_stool, delay_btw_moves):
+def animated_three_stools(model, ch_num, start_stool, end_stool, inter_stool, delay_btw_moves):
     """
     @param model:
-    @param cheese_amount:
+    @param ch_num:
     @param start_stool:
     @param end_stool:
     @param inter_stool:
     @param delay_btw_moves:
     @return:
     """
-    if cheese_amount >= 1:
-        animated_three_stools(model, cheese_amount - 1, start_stool, inter_stool, end_stool, delay_btw_moves)
+    if ch_num >= 1:
+        animated_three_stools(model, ch_num- 1, start_stool, inter_stool, end_stool, delay_btw_moves)
         model.move(start_stool, end_stool)
         print(model)
-        animated_three_stools(model, cheese_amount - 1, inter_stool, end_stool, start_stool, delay_btw_moves)
+        animated_three_stools(model, ch_num - 1, inter_stool, end_stool, start_stool, delay_btw_moves)
         time.sleep(delay_btw_moves)
 
-def four_stools_solution(model, cheese_amount, start_stool, end_stool, inter_stool1, inter_stool2):
+def four_stools_solution(model, ch_num, start_stool, end_stool, inter_stool1, inter_stool2):
     """
-    Solution for four-stool TOAH model. Moves cheese_amount cheese from start_stool to end_stool
+    Solution for four-stool TOAH model. Moves ch_num cheese from start_stool to end_stool
     via inter_stool1 and inter_stool2
 
     @param model: TOAHModel
-    @param cheese_amount: int
+    @param ch_num: int
     @param start_stool: int
     @param end_stool: int
     @param inter_stool1: int
     @param inter_stool2: int
     """
-    x = cheese_amount/2
-    y1 = math.ceil(x)
-    y2 = math.floor(x)
-    if cheese_amount == 1:
+    x = ch_num
+    y1 = x - math.floor(0.0007*x**2 + 0.1806*x + 2.265)
+    y2 = x - y1
+    if ch_num == 1:
         model.move(start_stool, end_stool)
-    elif cheese_amount == 2:
+    elif ch_num == 2:
         three_stools_solution(model, y1, start_stool, inter_stool2, inter_stool1)
         three_stools_solution(model, y2, start_stool, end_stool, inter_stool1)
         three_stools_solution(model, y1, inter_stool2, end_stool, inter_stool1)
@@ -113,23 +114,24 @@ def four_stools_solution(model, cheese_amount, start_stool, end_stool, inter_sto
         three_stools_solution(model, y2, start_stool, end_stool, inter_stool2)
         four_stools_solution(model, y1, inter_stool1, end_stool, start_stool, inter_stool2)
 
-def animated_four_stools(model, cheese_amount, start_stool, end_stool, inter_stool1, inter_stool2, delay_btw_moves):
+
+def animated_four_stools(model, ch_num, start_stool, end_stool, inter_stool1, inter_stool2, delay_btw_moves):
     """
     @param model: TOAHModel
-    @param cheese_amount: int
+    @param ch_num: int
     @param start_stool: int
     @param end_stool: int
     @param inter_stool1: int
     @param inter_stool2: int
     @param delay_btw_moves: float
     """
-    x = cheese_amount/2
+    x = ch_num/2
     y1 = math.ceil(x)
     y2 = math.floor(x)
-    if cheese_amount == 1:
+    if ch_num == 1:
         model.move(start_stool, end_stool)
         print(model)
-    elif cheese_amount == 2:
+    elif ch_num == 2:
         animated_three_stools(model, y1, start_stool, inter_stool2, inter_stool1, delay_btw_moves)
         animated_three_stools(model, y2, start_stool, end_stool, inter_stool1, delay_btw_moves)
         animated_three_stools(model, y1, inter_stool2, end_stool, inter_stool1, delay_btw_moves)
@@ -141,9 +143,9 @@ def animated_four_stools(model, cheese_amount, start_stool, end_stool, inter_sto
 
 
 if __name__ == '__main__':
-    num_cheeses = 5
+    num_cheeses = 3
     delay_between_moves = 0.5
-    console_animate = True
+    console_animate = False
 
     # DO NOT MODIFY THE CODE BELOW.
     four_stools = TOAHModel(4)
