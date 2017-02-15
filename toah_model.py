@@ -203,7 +203,7 @@ class TOAHModel:
                 x += 1
                 if cheese != other._stools[stool][x]:
                     return False
-            return True
+        return True
 
 
     def _cheese_at(self, stool_index, stool_height):
@@ -394,5 +394,5 @@ if __name__ == '__main__':
     doctest.testmod(verbose=True)
     # Leave lines below to see what python_ta checks.
     # File toahmodel_pyta.txt must be in same folder.
-    #import python_ta
-    #python_ta.check_all(config="toahmodel_pyta.txt")
+    import python_ta
+    python_ta.check_all(config="toahmodel_pyta.txt")

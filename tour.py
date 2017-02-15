@@ -159,6 +159,7 @@ def animated_four_stools(model, ch_num, start_stool, end_stool, inter_stool1, in
         animated_four_stools(model, y1, inter_stool1, end_stool, start_stool, inter_stool2, delay_btw_moves)
 
 if __name__ == '__main__':
+    num_cheeses = 3
     delay_between_moves = 0.5
     console_animate = False
 
