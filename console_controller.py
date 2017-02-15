@@ -107,11 +107,7 @@ class ConsoleController:
             self.play_loop()
 
 
-
-
-
 if __name__ == '__main__':
-    # TODO:
     # You should initiate game play here. Your game should be playable by
     # running this file.
     controller = ConsoleController(5, 4)

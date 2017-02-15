@@ -51,7 +51,6 @@ def tour_of_four_stools(model, delay_btw_moves=0.5, animate=True):
         four_stools_solution(model, cheecount, 0, 3, 1, 2)
 
 
-
 def three_stools_solution(model, ch_num, start_stool, end_stool, inter_stool):
     """
     Solution for three-peg TOAH model. Moves ch_num cheeses from start_stool
@@ -137,7 +136,7 @@ def four_stools_solution(model, ch_num, start_stool, end_stool,
     # i values up to ch_num=525 and used a polynomial of degree 6
     # that approximates the discrete values.
     # Does not hold for arbitrarily large values of ch_num
-    y1 = x - math.floor(-2*10**(-14)*x**6 + 3*10**(-11)*x**5 -2*10**(-8)*x**4
+    y1 = x - math.floor(-2*10**(-14)*x**6 + 3*10**(-11)*x**5 - 2*10**(-8)*x**4
                         + 7*10**(-6)*x**3 - 0.0014*x**2 + 0.1999*x + 2.1404)
     y2 = x - y1
     if ch_num == 1:
