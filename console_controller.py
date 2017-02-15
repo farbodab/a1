@@ -44,7 +44,8 @@ def move(model, origin, dest):
     dest = int(dest)
     if model._stools[origin] != []:
         to_be_moved = model._stools[origin][-1]
-        if model._stools[dest] != [] and to_be_moved.size > model._stools[dest][-1].size:
+        if model._stools[dest] != [] and to_be_moved.size > \
+                model._stools[dest][-1].size:
             print("Cannot put bigger cheese on smaller one!")
         else:
             model._stools[dest].append(to_be_moved)
@@ -88,7 +89,8 @@ class ConsoleController:
         provided to print a representation of the current state of the game.
         """
         print(self.model)
-        print("To make a move type 'move'. To exit the game at any point, just type 'exit'")
+        print("To make a move type 'move'. "
+              "To exit the game at any point, just type 'exit'")
 
         command = input()
         if command == 'move':

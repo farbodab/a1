@@ -29,15 +29,12 @@ algorithm.
 # along with this file.  If not, see <http://www.gnu.org/licenses/>.
 
 
-
 class TOAHModel:
     """ Model a game of Tour Of Anne Hoy.
 
     Model stools holding stacks of cheese, enforcing the constraint
     that a larger cheese may not be placed on a smaller one.
     """
-
-
     def __init__(self, number_of_stools):
         """ Create new TOAHModel with empty stools
         to hold stools of cheese.
@@ -65,7 +62,7 @@ class TOAHModel:
         """ Fill the nth stool with cheese_num number of cheeses.
 
         @param TOAHModel self: this TOAHModel
-        @param int stool_id: Stool placement in TOAHModel
+        @param int cheese_num: Stool placement in TOAHModel
         @rtype: None
         """
 
@@ -89,18 +86,14 @@ class TOAHModel:
         @param TOAHModel self: this TOAHModel
         @rtype int: number of stools
         """
-
-        stool_n = 0
-        for item in self._stools:
-            stool_n += 1
-        return stool_n
+        return len(self._stools)
 
     def add(self, cheese, stool_id):
         """
 
         @param TOAHModel self: this TOAHModel
-        @param Cheese: this Cheese
-        @param int: id or placement of the stool
+        @param Cheese cheese: this Cheese
+        @param int stool_id: id or placement of the stool
         @rtype: None
         """
 
@@ -109,23 +102,23 @@ class TOAHModel:
     def move(self, from_stool, stool_index):
         """
         @param TOAHModel self: this TOAHModel
-        @param from_stool int: id of stool that cheese is moved away from
-        @param stool_index int: id of stool that cheese is moved to
+        @param int from_stool: id of stool that cheese is moved away from
+        @param int stool_index : id of stool that cheese is moved to
         @rtype: None
         """
         to_be_moved = self._stools[from_stool][-1]
-        if self._stools[stool_index] != [] and to_be_moved.size > self._stools[stool_index][-1].size:
+        if self._stools[stool_index] != [] and to_be_moved.size > \
+                self._stools[stool_index][-1].size:
             raise Exception("Cannot put bigger cheese on smaller one!")
         else:
             self._stools[stool_index].append(to_be_moved)
             self._stools[from_stool].remove(to_be_moved)
             self.moves += 1
 
-
     def get_cheese_location(self, cheese):
         """
         @param TOAHModel self: this TOAHModel
-        @param Cheese: this Cheese
+        @param Cheese cheese: this Cheese
         @rtype int: id or placement of the corresponding stool
         """
 
@@ -137,7 +130,7 @@ class TOAHModel:
     def get_top_cheese(self, stool_index):
         """
         @param TOAHModel self: this TOAHModel
-        @param int: id or placement of the stool
+        @param int stool_index: id or placement of the stool
         @rtype: None
         """
 
@@ -195,16 +188,16 @@ class TOAHModel:
         >>> m1 == m2
         True
         """
-        # {1:[Cheese(3), Cheese(2)], 2:[Cheese(1)]} vs {1:[Cheese(3), Cheese(1)], 2:[Cheese(1)]}
+        # {1:[Cheese(3), Cheese(2)], 2:[Cheese(1)]}
+        # vs {1:[Cheese(3), Cheese(1)], 2:[Cheese(1)]}
         for stool in self._stools:
-            id = self._stools[stool]
+            id_ = self._stools[stool]
             x = 0
-            for cheese in id:
+            for cheese in id_:
                 x += 1
                 if cheese != other._stools[stool][x]:
                     return False
         return True
-
 
     def _cheese_at(self, stool_index, stool_height):
         # """ Return (stool_height)th from stool_index stool, if possible.
@@ -336,8 +329,9 @@ class MoveSequence(object):
         >>> ms.get_move(0) == (1, 2)
         True
         """
-        if not (0 <= i < len(self._moves)):
-            raise Exception("Position must be between 0 and total number of moves.")
+        if not 0 <= i < len(self._moves):
+            raise Exception("Position must be between 0"
+                            " and total number of moves.")
         return self._moves[i]
 
     def add_move(self, src_stool, dest_stool):
